@@ -2,7 +2,7 @@ exports.seed = function(knex, Promise) {
   return knex('results').del()
     .then(function () {
       return Promise.all([
-        knex('survey').insert({
+        knex('results').insert({
           id: 1, 
           survey_id: 1,
           answer_1: 'Burger King',
