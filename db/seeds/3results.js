@@ -11,7 +11,7 @@ exports.seed = function(knex, Promise) {
           score_2: 0,
           answer_3: 'Bahn Mi Boys',
           score_3: 0,
-          answer_3: 'Burger Priest',
+          answer_4: 'Burger Priest',
           score_4: 0
         }),
         knex('results').insert({
@@ -23,7 +23,7 @@ exports.seed = function(knex, Promise) {
           score_2: 0,
           answer_3: 'Get Butt implants!',
           score_3: 0,
-          answer_3: 'Make Pisco Sours',
+          answer_4: 'Make Pisco Sours',
           score_4: 0
         }),
         knex('results').insert({
@@ -35,7 +35,7 @@ exports.seed = function(knex, Promise) {
           score_2: 0,
           answer_3: 'Zach',
           score_3: 0,
-          answer_3: 'Jonathan',
+          answer_4: 'Jonathan',
           score_4: 0
         })
       ]);

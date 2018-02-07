@@ -20,7 +20,7 @@ module.exports = function(knex){
         })
     }
     // Function that stores the admin URL and user URL 
-    const addLink = function(adminLink, userLink) {
+    const addLinks = function(adminLink, userLink) {
         knex('survey').insert({
             admin_link: adminLink,
             user_link: userLink

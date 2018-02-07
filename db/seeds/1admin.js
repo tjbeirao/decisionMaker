@@ -1,5 +1,7 @@
-exports.seed = function(knex, Promise) {
-  return knex('admin').del()
+exports.seed = function(knex, Promise) { 
+  return knex('results').del()
+    knex('survey').del()
+    knex('admin').del()
     .then(function () {
       return Promise.all([
         knex('admin').insert({id: 1, email: 'jonathan_lorimer@mac.com'}),
