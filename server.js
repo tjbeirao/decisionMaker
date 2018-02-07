@@ -14,6 +14,9 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+const randomUrl = require("./routes/utilities/randomUrl.js");
+const cookieSession = require('cookie-session')
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -35,13 +38,62 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-// Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  maxAge: 24 * 60 * 60 * 1000
+}))
 
-// Home page
+// Mount all resource routes
+// app.use("/api/users", usersRoutes(knex));
+
+
+
 app.get("/", (req, res) => {
-  res.render("index");
-});
+  res.render("./index")
+})
+
+app.post("/", (req, res) => {
+  //collect email from HTML input, save it to the data base on [admin:email]
+  //create a cookie with email information
+  res.redirect("/index/create")
+})
+
+app.get("/create", (req, res) => {
+  res.render("./create")
+})
+
+app.post("/create", (req, res) => {
+  //collect information from HTML text inputs, save it to the data base [poll: title, subject, question, anwsers]
+  //call function to generate random URL - twice 
+  //randomUrl()
+  //send email for using the saved cookie
+  res.redirect("/create/confirmation")
+})
+
+app.get("/create/confirmation", (req, res) => {
+  //delete all cookies generated
+  res.render("./confirmation")
+})
+
+app.get("/survey/:user_survey_id", (req, res) => {
+  //we might have to use EJS at this point
+  res.render("./survey")
+})
+
+app.post("/survey/:user_survey_id", (req, res) => {
+  //collect informations from drag-and-drop
+  //run the function to do the math of the results
+  //save the results in database
+  res.redirect("/survey/confirmation")
+})
+
+app.get("/survey/:admin_survey_id"){
+  //collect information from DB
+  //convert the data for percentage
+  //sort the collection for display
+}
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
