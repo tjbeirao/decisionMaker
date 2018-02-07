@@ -89,7 +89,7 @@ module.exports = function(knex){
 return { 
     addAdmin,
     searchForAdmin,
-    addLink,
+    addLinks,
     searchForAdminLink,
     searchForUserLink,
     addSurveyInfo,
