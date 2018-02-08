@@ -1,6 +1,5 @@
 node_modules/
 public/styles
-routes/utilities/mailGun.js
 .env
 *.log
 *.sqlite3
