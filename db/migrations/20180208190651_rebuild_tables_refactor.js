@@ -13,11 +13,6 @@ exports.up = function (knex, Promise) {
             table.string('admin_link');
             table.string('user_link');
             table.string('question');
-        }),
-        knex.schema.createTable('results', function (table) {
-            table.increments('id');
-            table.integer('survey_id');
-            table.foreign('survey_id').references('survey.id');
             table.string('answer_1');
             table.integer('score_1');
             table.string('answer_2');
