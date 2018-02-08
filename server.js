@@ -51,13 +51,14 @@ app.use(cookieSession({
 
 
 
-app.get("/index", (req, res) => {
+app.get("/", (req, res) => {
   res.render("index");
 })
 
-app.post("/index", (req, res) => {
+app.post("/", (req, res) => {
+  console.log(req.body.email)
   // addAdmin(req.body.email)                                                     //collect email from HTML input, save it to the data base on [addAdmin]
-  // req.session.current_user = req.body.email                                    //create a cookie with email information
+  req.session.current_user = req.body.email                                    //create a cookie with email information
   res.redirect("/create");
 })
 
@@ -69,6 +70,7 @@ app.post("/create", (req, res) => {
   console.log("fields -->", req.body);
   //addSurveyInfo(req.body.title, req.body.description, req.body.question)                                                     //collect information from HTML text inputs, save it to the data base [addSurveyInfo]
   //addLink(randomUrl(), randomUrl());                                           // call function to generate random URL - twice 
+  //addResultsInfo(GEN.ID, req.body.answer1, req.body.answer2, req.body.answer3, req.body.answer4, req.body.answer5)
   //send email for using the saved cookie
   res.redirect("/create/confirmation");
 })
