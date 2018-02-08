@@ -3,33 +3,120 @@ input{
     /*font-size:20px;*/
     text-align: center;
     /*padding:10px;*/
-    border:solid 1px #FFFFFF;
-    width:50%;
-    height: 30px;
+    // border:solid 1px #EEE;
+    // width:50%;
+    // height: 30px;
     margin: 0 auto;
     font-family: 'Barlow Condensed';
 }
 
-#yellowBackground{
+.yellowBackground{
 	width: 100%;
-	height: 30px;
+	height: 75px;
 	background-color: #FFBF00;
+	padding-top: 10px;
+	border: black;
 }
 
-#pinkBackground{
+.pinkBackground{
 	width: 100%;
-	height: 30px;
+	height: 75px;
 	background-color: #E83F6F;	
+	padding-top: 10px;
+	// border: black;
 }
 
-#greenBackground{
+.greenBackground{
 	width: 100%;
-	height: 30px;
+	height: 75px;
 	background-color: #32936F;
+	padding-top: 10px;
+	// border: black;
 }
 
-#blueBackground{
+.blueBackground{
 	width: 100%;
-	height: 30px;
+	height: 75px;
 	background-color: #2274A5;
+	padding-top: 10px;
+	// border: black;
 }
+
+.title_div{
+	width: 100%;
+	height: 75px;
+	background-color: #FFFFFF;
+	padding-top: 10px;
+}
+
+.survey_input_title{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.description_div{
+	width: 100%;
+	height: 75px;
+	background-color: #FFFFFF;
+	padding-top: 10px;
+}
+
+.survey_input_description{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.question_div{
+	width: 100%;
+	height: 75px;
+	background-color: #FFFFFF;
+	padding-top: 10px;
+}
+
+.survey_input_question{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.survey_input_answer1{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.survey_input_answer2{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.survey_input_answer3{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.survey_input_answer4{
+	width: 30%;
+	height: 80%;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.submit{
+	float: right;
+	display: inline;
+}
+// .btn-link {
+// 	float: right;
+// 	// width: 20px;
+// }

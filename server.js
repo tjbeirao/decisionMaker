@@ -18,6 +18,7 @@ const randomUrl = require("./routes/utilities/randomUrl.js");
 const cookieSession = require('cookie-session');
 const borda = require("./routes/utilities/bordaCount.js");
 const dbHelpers = require("./db/dbHelpers.js")(knex)
+const mailgun = require("./routes/utilities/mailGun.js")
 
 // Seperated Routes for each Resource
 const publicRoutes = require("./routes/users");
@@ -85,7 +86,7 @@ app.post("/create", (req, res) => {
       )
     })
     .then(()=>{
-      return //function(req.session.current_user, user_link, admin_link)
+      return mailgun(req.session.current_user, user_link, admin_link)
     })
     .then(() => { res.redirect("/create/confirmation");})
     .catch((err) => {console.error(err)});
@@ -98,8 +99,9 @@ app.get("/create/confirmation", (req, res) => {
 })
 
 app.get("/survey/:user_survey_id", (req, res) => {
-  let user_link = (`http://localhost8080/survey/${user_survey_id }`)
-  dbHelpers.searchForUserLink(user_link)
+  console.log(req.protocol + '://' + req.get('host') + req.originalUrl)
+  let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
+  dbHelpers.searchForSurveyid(user_link)
     .then((poll_data)=>{
       res.render("survey", poll_data);
     })

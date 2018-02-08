@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
 
   <!-- External CSS -->
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" /> -->
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -25,24 +25,37 @@
 </head>
 
 <body>
-    <h1>Decision Maker</h1>
+    <!-- <h1>Decision Maker</h1> -->
     <form id='survey_create_form' action="/create" method="POST">
-        <input class="survey_input_title" type="text" placeholder="Title" name="survey_input_title">
-        <input class="survey_input_description" type="text" placeholder="Description" name="survey_input_description">
-        <input class="survey_input_question" type="text" placeholder="Question" name="survey_input_question">
+        <div class="title_div">
+          <input class="survey_input_title" type="text" placeholder="Title" name="survey_input_title">
+        </div>
+
+        <div class="description_div">
+          <input class="survey_input_description" type="text" placeholder="Description" name="survey_input_description">
+        </div>
+
+        <div class="question_div">
+          <input class="survey_input_question" type="text" placeholder="Question" name="survey_input_question">
+        </div>
+
         <div class="yellowBackground">
-            <input class="survey_input_answer1" type="text" placeholder="Answer 1" name="answer1">
+          <input class="survey_input_answer1" type="text" placeholder="Answer 1" name="answer1">
         </div>
+
         <div class="pinkBackground">
-            <input class="survey_input_answer2" type="text" placeholder="Answer 2" name="answer2">
+          <input class="survey_input_answer2" type="text" placeholder="Answer 2" name="answer2">
         </div>
+
         <div class="greenBackground">
-            <input class="survey_input_answer3" type="text" placeholder="Answer 3" name="answer3">
+          <input class="survey_input_answer3" type="text" placeholder="Answer 3" name="answer3">
         </div>
+
         <div class="blueBackground">
-            <input class="survey_input_answer4" type="text" placeholder="Answer 4" name="answer4">
+          <input class="survey_input_answer4" type="text" placeholder="Answer 4" name="answer4">
+          <input class="submit" type="submit" value="Proceed"> 
         </div>
-        <input type="submit" value="Proceed"> 
+        
     </form>
 </body>
 

@@ -1,7 +1,48 @@
 body {
   background-color: #EEE;
+  font-family: 'Barlow Condensed', sans-serif;
 }
 
-body h1 {
-  color: #244751;
+// body h1 {
+//   color: #244751;
+//   // text-align: center;
+//   // position:fixed;
+//   //   transition: 100s ease;
+//   //   top: 50%;
+//     // left: 50%;
+//   display: inline-block;
+// }
+
+
+
+#main-h1 {
+	padding-top: 10%;
+	text-align: center;
+	color: grey;
+	font-weight: bold;
+	font-size: 1px;
+}
+.btn-primary {
+	position:absolute;
+    transition: 100s ease;
+    top: 70%;
+    right: 15%;
+	border-color: #2274A5;
+	background-color: #2274A5;
+  width: 30%;
+  height: 10%;
+  // font-size: 50px;
+}
+
+.admin_input_email {
+	position:absolute;
+    transition: .5s ease;
+    top: 70%;
+    left: 15%;
+	border-color: black;
+	background-color: #EEE;
+  border-radius: 5px;
+  width: 30%;
+  height: 10%;
+  text-align: center;
 }
