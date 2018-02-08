@@ -49,40 +49,38 @@ app.use(cookieSession({
 // Mount all resource routes
 // app.use("/index", publicRoutes(knex));
 
+
+
 app.get("/index", (req, res) => {
-  res.render("index")
+  res.render("index");
 })
 
-app.post("/", (req, res) => {
-  console.log(req.body)
-  //collect email from HTML input, save it to the data base on [addAdmin]
-  //create a cookie with email information
-  // res.redirect("/create")
+app.post("/index", (req, res) => {
+  // addAdmin(req.body.email)                                                     //collect email from HTML input, save it to the data base on [addAdmin]
+  // req.session.current_user = req.body.email                                    //create a cookie with email information
+  res.redirect("/create");
 })
 
 app.get("/create", (req, res) => {
-  res.render("create")
+  res.render("create");
 })
 
-app.post("./public/create", (req, res) => {
-  //collect information from HTML text inputs, save it to the data base [addSurveyInfo]
-  //call function to generate random URL - twice 
-  //let adminlink = randomUrl()
-  // let userlink = randomUrl()
-  // dbHelpers.addlinks(adminlink, userlink)
-  //save random URL on database [addLinks]
+app.post("/create", (req, res) => {
+  console.log("fields -->", req.body);
+  //addSurveyInfo(req.body.title, req.body.description, req.body.question)                                                     //collect information from HTML text inputs, save it to the data base [addSurveyInfo]
+  //addLink(randomUrl(), randomUrl());                                           // call function to generate random URL - twice 
   //send email for using the saved cookie
-  res.redirect("/confirmation")
+  res.redirect("/create/confirmation");
 })
 
 app.get("/create/confirmation", (req, res) => {
-  //delete all cookies generated
-  res.render("confirmation")
+  //req.session = null;                                                           //delete all cookies generated
+  res.render("confirmation");
 })
 
 app.get("/survey/:user_survey_id", (req, res) => {
   //we might have to use EJS at this point
-  res.render("survey")
+  res.render("survey");
 })
 
 app.post("/survey/:user_survey_id", (req, res) => {
@@ -94,7 +92,7 @@ app.post("/survey/:user_survey_id", (req, res) => {
   //search for admin email 
   //collect information from DB [searchForAdminLink]
   //send the email for the admin
-  res.redirect("/survey/confirmation")
+  res.redirect("/survey/confirmation");
 })
 
 app.get("/survey/:admin_survey_id", (req, res) =>{
