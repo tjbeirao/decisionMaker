@@ -82,9 +82,9 @@ exports.seed = function(knex, Promise) {
     })
     .then (function(){
       return Promise.all([
-        knex.raw('ALTER SEQUENCE admin_id_seq START 7'),
-        knex.raw('ALTER SEQUENCE survey_id_seq START 7'),
-        knex.raw('ALTER SEQUENCE results_id_seq START 7')
+        knex.raw('ALTER SEQUENCE admin_id_seq RESTART WITH 7'),
+        knex.raw('ALTER SEQUENCE survey_id_seq RESTART WITH 7'),
+        knex.raw('ALTER SEQUENCE results_id_seq RESTART WITH 7')
       ])
     });
 };

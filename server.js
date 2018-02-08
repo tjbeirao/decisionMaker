@@ -2,17 +2,17 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
+const bodyParser = require("body-parser");
+const sass = require("node-sass-middleware");
+const app = express();
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require('morgan');
+const knexLogger = require('knex-logger');
 
 const randomUrl = require("./routes/utilities/randomUrl.js");
 const cookieSession = require('cookie-session');
@@ -56,9 +56,8 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-  // addAdmin(req.body.email)                                                     //collect email from HTML input, save it to the data base on [addAdmin]
-  dbHelpers.addAdmin(req.body.email)
-  req.session.current_user = req.body.email                                    //create a cookie with email information
+  dbHelpers.addAdmin(req.body.email) //getting the email and sending to the db
+  req.session.current_user = req.body.email; //creating a cookie with the email
   res.redirect("/create");
 })
 
@@ -68,8 +67,34 @@ app.get("/create", (req, res) => {
 
 app.post("/create", (req, res) => {
   console.log("fields -->", req.body);
-  //addSurveyInfo(req.body.title, req.body.description, req.body.question)                                                     //collect information from HTML text inputs, save it to the data base [addSurveyInfo]
-  //addLink(randomUrl(), randomUrl());                                           // call function to generate random URL - twice 
+  // let title = req.body.title
+  // let description = req.body.description
+  // let question = req.body.question
+  dbHelpers.searchForAdminid(req.session.current_user)
+    .then((admin) => {
+      console.log(admin[0].id)
+      return dbHelpers.addSurveyInfo(
+        admin[0].id,
+        randomUrl(),
+        randomUrl(),
+        req.body.survey_input_title,
+        req.body.survey_input_description,
+        req.body.survey_input_question)
+    })
+    .then(()=>{
+      return 
+    })
+    .then(() => { res.redirect("/create/confirmation");})
+    .catch((err) => {console.error(err)})
+
+  // dbHelpers.addResultsInfo(
+  //   ID,
+  //   req.body.title,
+  //   req.body.title,
+  //   req.body.title,
+  //   req.body.title,
+
+  // )
   //addResultsInfo(GEN.ID, req.body.answer1, req.body.answer2, req.body.answer3, req.body.answer4, req.body.answer5)
   //send email for using the saved cookie
   res.redirect("/create/confirmation");
@@ -97,7 +122,7 @@ app.post("/survey/:user_survey_id", (req, res) => {
   res.redirect("/survey/confirmation");
 })
 
-app.get("/survey/:admin_survey_id", (req, res) =>{
+app.get("/survey/:admin_survey_id", (req, res) => {
   //pull data from database [addResultsInfo]
   //convert the data to percentage 
   //sort the collection for display
