@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
 
 	<!-- External CSS -->
-	<link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+	<!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" /> -->
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -18,14 +18,17 @@
 
   <!-- Internal CSS -->
 	<link rel="stylesheet" href="/styles/layout.css" type="text/css">
+  
 </head>
 
 
 <body>
-  <h1>Decision Maker</h1>
+  <div id="main-h1">
+    <h1>Decision Maker</h1>
+  </div>
   <form class="admin_create_form" action="/" method="POST">
-    <input class="admin_input_email" type="email" placeholder="Please, type your e-mail" name="email" required>
-    <input type="submit" value="Get Started">
+    <input class="admin_input_email" type="email" placeholder="Enter email" name="email" required>
+    <input type="submit" class="btn btn-primary" value="Get Started">
   </form>
 </body>
 
