@@ -66,46 +66,43 @@ app.get("/create", (req, res) => {
 })
 
 app.post("/create", (req, res) => {
-  console.log("fields -->", req.body);
-  // let title = req.body.title
-  // let description = req.body.description
-  // let question = req.body.question
+  let user_link = randomUrl('user')
+  let admin_link = randomUrl('admin')
   dbHelpers.searchForAdminid(req.session.current_user)
     .then((admin) => {
       console.log(admin[0].id)
       return dbHelpers.addSurveyInfo(
         admin[0].id,
-        randomUrl(),
-        randomUrl(),
+        admin_link,
+        user_link,
         req.body.survey_input_title,
         req.body.survey_input_description,
-        req.body.survey_input_question)
+        req.body.survey_input_question,
+        req.body.answer1,
+        req.body.answer2,
+        req.body.answer3,
+        req.body.answer4
+      )
     })
     .then(()=>{
-      return 
+      return //function(req.session.current_user, user_link, admin_link)
     })
     .then(() => { res.redirect("/create/confirmation");})
-    .catch((err) => {console.error(err)})
-
-  // dbHelpers.addResultsInfo(
-  //   ID,
-  //   req.body.title,
-  //   req.body.title,
-  //   req.body.title,
-  //   req.body.title,
-
-  // )
-  //addResultsInfo(GEN.ID, req.body.answer1, req.body.answer2, req.body.answer3, req.body.answer4, req.body.answer5)
-  //send email for using the saved cookie
-  res.redirect("/create/confirmation");
+    .catch((err) => {console.error(err)});
 })
 
 app.get("/create/confirmation", (req, res) => {
+
   //req.session = null;                                                           //delete all cookies generated
   res.render("confirmation");
 })
 
 app.get("/survey/:user_survey_id", (req, res) => {
+  let user_link = (`http://localhost8080/survey/${user_survey_id }`)
+  dbHelpers.searchForUserLink(user_link)
+    .then((poll_data)=>{
+      res.render("survey", poll_data);
+    })
   //we might have to use EJS at this point
   res.render("survey");
 })
@@ -122,7 +119,7 @@ app.post("/survey/:user_survey_id", (req, res) => {
   res.redirect("/survey/confirmation");
 })
 
-app.get("/survey/:admin_survey_id", (req, res) => {
+app.get("/admin/:admin_survey_id", (req, res) => {
   //pull data from database [addResultsInfo]
   //convert the data to percentage 
   //sort the collection for display

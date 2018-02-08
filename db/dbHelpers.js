@@ -22,57 +22,49 @@ module.exports = function(knex){
         .catch(err => console.log(err))
     }
     // Function that stores the admin URL and user URL 
-    const addSurveyInfo = function(id, adminLink, userLink, title, description, question) {
+    const addSurveyInfo = function(id, adminLink, userLink, title, description, question, answer1, answer2, answer3, answer4) {
         return knex('survey').insert({
             admin_id: id,
             admin_link: adminLink,
             user_link: userLink,
             title: title,
             description: description,
-            question: question
+            question: question,
+            answer_1: answer1,
+            answer_2: answer2,
+            answer_3: answer3,
+            answer_4: answer4,
         })
         .then((res) => res)
         .catch(err => console.log(err))
     }
     // Function that queries db for admin URL 
-    const searchForAdminLink = function(id) {
-        return knex.select('admin_link').table('admin').where('id', id)
-        .then((res) => res)
-        .catch(err => console.log(err))
-    }
-    // Function that queries db for user URL 
-    const searchForUserLink = function(id) {
-        return knex.select('user_link').table('survey').where('id', id)
+    const searchForLinks = function(id) {
+        return knex.select('admin_link', 'user_link').table('survey').where('id', id)
         .then((res) => res)
         .catch(err => console.log(err))
     }
      // Function that queries db for survey ID 
-     const searchForSurveyid = function(admin_id) {
-        return knex.select('id').table('survey').where('admin_id', admin_id)
-        .then((res) => res)
-        .catch(err => console.log(err))
-    }
-    // Function that stores the answers from the create page 
-    const addResultsInfo = function(id, answer1, answer2, answer3, answer4) {
-        return knex('results').insert({
-            survey_id: id,
-            answer_1: answer1,
-            answer_2: answer2,
-            answer_3: answer3,
-            answer_4: answer4
-        })
+     const searchForSurveyid = function(user_link) {
+        return knex.select('id').table('survey').where('user_link', user_link)
         .then((res) => res)
         .catch(err => console.log(err))
     }
     // Function that queries db for user URL 
-    const searchResultsScore = function(id) {
-        return knex.select('score_1','score_2','score_3','score_4').table('results').where('id', id)
+    const searchSurveyAnswers = function(id) {
+        return knex.select('answer_1','answer_2','answer_3','answer_4').table('survey').where('id', id)
+        .then((res) => res)
+        .catch(err => console.log(err))
+    }
+    // Function that queries db for user URL 
+    const searchSurveyScore = function(id) {
+        return knex.select('score_1','score_2','score_3','score_4').table('survey').where('id', id)
         .then((res) => res)
         .catch(err => console.log(err))
     }
     // Function that stores the answers from the create page 
-    const addResultsScore = function(id, score1, score2, score3, score4) {
-        return knex('results').where('id', id).update({
+    const addSurveyScore = function(id, score1, score2, score3, score4) {
+        return knex('survey').where('id', id).update({
             score_1: score1,
             score_2: score2,
             score_3: score3,
@@ -87,11 +79,11 @@ return {
     searchForAdminEmail,
     searchForAdminid,
     addSurveyInfo,
-    searchForAdminLink,
-    searchForUserLink,
-    addResultsInfo,
-    searchResultsScore,
-    addResultsScore
+    searchForLinks,
+    searchForSurveyid,
+    searchSurveyAnswers,
+    searchSurveyScore,
+    addSurveyScore
 }
 
 }
