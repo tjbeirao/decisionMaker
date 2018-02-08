@@ -17,10 +17,10 @@ const knexLogger  = require('knex-logger');
 const randomUrl = require("./routes/utilities/randomUrl.js");
 const cookieSession = require('cookie-session');
 const borda = require("./routes/utilities/bordaCount.js");
-const dbHelpers = require("./db/dbHelpers.js")(knex)
+// const dbHelpers = require("./db/dbHelpers.js")(knex)
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
+const publicRoutes = require("./routes/users");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -47,24 +47,24 @@ app.use(cookieSession({
 }))
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+// app.use("/index", publicRoutes(knex));
 
-app.get("/", (req, res) => {
-  res.render("./index")
+app.get("/index", (req, res) => {
+  res.render("index")
 })
 
 app.post("/", (req, res) => {
+  console.log(req.body)
   //collect email from HTML input, save it to the data base on [addAdmin]
   //create a cookie with email information
-  //let current_user = req.session.current_user
-  res.redirect("/index/create")
+  // res.redirect("/create")
 })
 
 app.get("/create", (req, res) => {
-  res.render("./create")
+  res.render("create")
 })
 
-app.post("/create", (req, res) => {
+app.post("./public/create", (req, res) => {
   //collect information from HTML text inputs, save it to the data base [addSurveyInfo]
   //call function to generate random URL - twice 
   //let adminlink = randomUrl()
@@ -72,17 +72,17 @@ app.post("/create", (req, res) => {
   // dbHelpers.addlinks(adminlink, userlink)
   //save random URL on database [addLinks]
   //send email for using the saved cookie
-  res.redirect("/create/confirmation")
+  res.redirect("/confirmation")
 })
 
 app.get("/create/confirmation", (req, res) => {
   //delete all cookies generated
-  res.render("./confirmation")
+  res.render("confirmation")
 })
 
 app.get("/survey/:user_survey_id", (req, res) => {
   //we might have to use EJS at this point
-  res.render("./survey")
+  res.render("survey")
 })
 
 app.post("/survey/:user_survey_id", (req, res) => {
