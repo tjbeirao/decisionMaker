@@ -17,7 +17,7 @@ const knexLogger  = require('knex-logger');
 const randomUrl = require("./routes/utilities/randomUrl.js");
 const cookieSession = require('cookie-session');
 const borda = require("./routes/utilities/bordaCount.js");
-// const dbHelpers = require("./db/dbHelpers.js")(knex)
+const dbHelpers = require("./db/dbHelpers.js")(knex)
 
 // Seperated Routes for each Resource
 const publicRoutes = require("./routes/users");
@@ -56,8 +56,8 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-  console.log(req.body.email)
   // addAdmin(req.body.email)                                                     //collect email from HTML input, save it to the data base on [addAdmin]
+  dbHelpers.addAdmin(req.body.email)
   req.session.current_user = req.body.email                                    //create a cookie with email information
   res.redirect("/create");
 })
