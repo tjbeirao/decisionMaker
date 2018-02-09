@@ -106,8 +106,8 @@ app.get("/survey/:user_survey_id", (req, res) => {
       return dbHelpers.searchSurveyData(surveyid[0].id)
     })
     .then((poll_data)=>{
-      console.log(poll_data)
-      res.render("survey", poll_data);
+      let templatevars = poll_data[0];
+      res.render("survey", templatevars);
     })
 })
 
