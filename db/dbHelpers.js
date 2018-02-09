@@ -2,7 +2,6 @@ module.exports = function(knex){
     
     // Function that adds admin email 
     const addAdmin = function(email) {
-        console.log('in the add admin function')
         return knex('admin').insert({
             email: email,
         })

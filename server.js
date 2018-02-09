@@ -71,7 +71,6 @@ app.post("/create", (req, res) => {
   let admin_link = randomUrl('admin')
   dbHelpers.searchForAdminid(req.session.current_user)
     .then((admin) => {
-      console.log(admin[0].id)
       return dbHelpers.addSurveyInfo(
         admin[0].id,
         admin_link,
@@ -86,7 +85,8 @@ app.post("/create", (req, res) => {
       )
     })
     .then(()=>{
-      return mailgun(req.session.current_user, user_link, admin_link)
+      // return mailgun(req.session.current_user, user_link, admin_link)
+      console.log("mail gun function", mailgun(req.session.current_user, user_link, admin_link))
     })
     .then(() => { res.redirect("/create/confirmation");})
     .catch((err) => {console.error(err)});
@@ -99,7 +99,6 @@ app.get("/create/confirmation", (req, res) => {
 })
 
 app.get("/survey/:user_survey_id", (req, res) => {
-  console.log(req.protocol + '://' + req.get('host') + req.originalUrl)
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
   dbHelpers.searchForSurveyid(user_link)
     .then((poll_data)=>{
