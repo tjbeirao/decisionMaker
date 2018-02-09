@@ -32,7 +32,9 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -84,15 +86,25 @@ app.post("/create", (req, res) => {
         req.body.answer4
       )
     })
-    .then(()=>{
+    .then(() => {
       mailgun(req.session.current_user, user_link, admin_link)
       return
     })
-    .then(() => { res.redirect("/create/confirmation");})
-    .catch((err) => {console.error(err)});
+    .then(() => {
+      res.redirect("/create/confirmation");
+    })
+    .catch((err) => {
+      console.error(err)
+    });
 })
 
 app.get("/create/confirmation", (req, res) => {
+
+  //req.session = null;                                                           //delete all cookies generated
+  res.render("confirmation");
+})
+
+app.get("/survey/confirmation", (req, res) => {
 
   //req.session = null;                                                           //delete all cookies generated
   res.render("confirmation");
@@ -107,7 +119,7 @@ app.get("/survey/:user_survey_id", (req, res) => {
       templatevars.surveyid = surveyid[0].id
       return dbHelpers.searchSurveyData(surveyid[0].id)
     })
-    .then((poll_data)=>{
+    .then((poll_data) => {
       templatevars.poll_data = poll_data[0];
       res.render("survey", templatevars);
     })
@@ -120,43 +132,83 @@ app.post("/survey/:user_survey_id", (req, res) => {
   let score_2 = 0
   let score_3 = 0
   let score_4 = 0
-  
-  for(let i = 0; i < array.length; i++){
-    if (array[i] === 'score_1'){
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === 'score_1') {
       score_1 = (4 - i)
-    } else if (array[i] === 'score_2'){
+    } else if (array[i] === 'score_2') {
       score_2 = (4 - i)
-    } else if (array[i] === 'score_3'){
+    } else if (array[i] === 'score_3') {
       score_3 = (4 - i)
-    } else if (array[i] === 'score_4'){
+    } else if (array[i] === 'score_4') {
       score_4 = (4 - i)
     }
   }
 
   dbHelpers.searchSurveyScore(req.body.survey_id)
-  .then((scores) => {
-    score_1 += scores[0].score_1
-    score_2 += scores[0].score_2
-    score_3 += scores[0].score_3
-    score_4 += scores[0].score_4
-   return
-  })
-  .then(() => {
-    return dbHelpers.addSurveyScore(req.body.survey_id, score_1, score_2, score_3, score_4)
-  })
-  .then(() => {
-    console.log(req.body.admin_id)
-    console.log(req.body.user_link, req.body.admin_link)
-    return dbHelpers.searchForAdminEmail(req.body.admin_id)
-  })
-  .then((email)=>{
-    mailgun(email[0].email, req.body.user_link, req.body.admin_link)
-    res.redirect("/survey/confirmation");
-  })
-  .catch((err)=> console.error(err))
+    .then((scores) => {
+      score_1 += scores[0].score_1
+      score_2 += scores[0].score_2
+      score_3 += scores[0].score_3
+      score_4 += scores[0].score_4
+      return
+    })
+    .then(() => {
+      return dbHelpers.addSurveyScore(req.body.survey_id, score_1, score_2, score_3, score_4)
+    })
+    .then(() => {
+      console.log(req.body.admin_id)
+      console.log(req.body.user_link, req.body.admin_link)
+      return dbHelpers.searchForAdminEmail(req.body.admin_id)
+    })
+    .then((email) => {
+      mailgun(email[0].email, req.body.user_link, req.body.admin_link)
+      return
+    })
+    .then(() => {
+      res.redirect("/survey/confirmation");
+    })
+    .catch((err) => console.error(err))
 })
 
 app.get("/admin/:admin_survey_id", (req, res) => {
+  let admin_link = req.protocol + '://' + req.get('host') + req.originalUrl
+  
+  let percent_1 = 0
+  let percent_2 = 0
+  let percent_3 = 0
+  let percent_4 = 0
+
+  dbHelpers.searchForSurveyidAdminLink(admin_link)
+    .then((survey_id) => {
+      return dbHelpers.searchSurveyScore(survey_id[0].id)
+    })
+    .then((data) => {
+      let scores = data[0]
+    
+      let total = scores.score_1 + scores.score_2 + scores.score_3 + scores.score_4;
+      console.log("total ", total)
+      percent_1 = ((scores.score_1/total) * 100)
+      percent_2 = ((scores.score_2/total) * 100)
+      percent_3 = ((scores.score_3/total) * 100)
+      percent_4 = ((scores.score_4/total) * 100)
+      return (scores.id)
+    })
+    .then((survey_id) => {
+      return dbHelpers.searchSurveyData(survey_id)
+    })
+    .then((survey_data) => {
+      let surveyData = survey_data[0]
+      let templatevars = {
+        surveyData,
+        percent_1,
+        percent_2,
+        percent_3,
+        percent_4,
+      }
+
+      return res.render("results", templatevars)
+    })
   //pull data from database [addResultsInfo]
   //convert the data to percentage 
   //sort the collection for display
