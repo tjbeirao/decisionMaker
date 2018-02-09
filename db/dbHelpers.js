@@ -50,8 +50,18 @@ module.exports = function(knex){
         .catch(err => console.log(err))
     }
     // Function that queries db for user URL 
-    const searchSurveyAnswers = function(id) {
-        return knex.select('answer_1','answer_2','answer_3','answer_4').table('survey').where('id', id)
+    const searchSurveyData = function(id) {
+        return knex.select(
+            'admin_id',
+            'admin_link',
+            'user_link',
+            'title',
+            'description',
+            'question',
+            'answer_1',
+            'answer_2',
+            'answer_3',
+            'answer_4').table('survey').where('id', id)
         .then((res) => res)
         .catch(err => console.log(err))
     }
@@ -80,7 +90,7 @@ return {
     addSurveyInfo,
     searchForLinks,
     searchForSurveyid,
-    searchSurveyAnswers,
+    searchSurveyData,
     searchSurveyScore,
     addSurveyScore
 }

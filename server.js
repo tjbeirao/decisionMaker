@@ -85,8 +85,8 @@ app.post("/create", (req, res) => {
       )
     })
     .then(()=>{
-      // return mailgun(req.session.current_user, user_link, admin_link)
-      console.log("mail gun function", mailgun(req.session.current_user, user_link, admin_link))
+      mailgun(req.session.current_user, user_link, admin_link)
+      return
     })
     .then(() => { res.redirect("/create/confirmation");})
     .catch((err) => {console.error(err)});
@@ -99,13 +99,16 @@ app.get("/create/confirmation", (req, res) => {
 })
 
 app.get("/survey/:user_survey_id", (req, res) => {
+  console.log("in user survey get route")
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
   dbHelpers.searchForSurveyid(user_link)
+    .then((surveyid) => {
+      return dbHelpers.searchSurveyData(surveyid[0].id)
+    })
     .then((poll_data)=>{
+      console.log(poll_data)
       res.render("survey", poll_data);
     })
-  //we might have to use EJS at this point
-  res.render("survey");
 })
 
 app.post("/survey/:user_survey_id", (req, res) => {
