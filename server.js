@@ -59,8 +59,8 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-  dbHelpers.addAdmin(req.body.email) //getting the email and sending to the db
-  req.session.current_user = req.body.email; //creating a cookie with the email
+  dbHelpers.addAdmin(req.body.email)
+  req.session.current_user = req.body.email
   res.redirect("/create");
 })
 
@@ -209,9 +209,6 @@ app.get("/admin/:admin_survey_id", (req, res) => {
 
       return res.render("results", templatevars)
     })
-  //pull data from database [addResultsInfo]
-  //convert the data to percentage 
-  //sort the collection for display
 })
 
 app.listen(PORT, () => {
