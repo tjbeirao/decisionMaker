@@ -100,27 +100,60 @@ app.get("/create/confirmation", (req, res) => {
 
 app.get("/survey/:user_survey_id", (req, res) => {
   console.log("in user survey get route")
+  let templatevars = {}
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
   dbHelpers.searchForSurveyid(user_link)
     .then((surveyid) => {
+      templatevars.surveyid = surveyid[0].id
       return dbHelpers.searchSurveyData(surveyid[0].id)
     })
     .then((poll_data)=>{
-      let templatevars = poll_data[0];
+      templatevars.poll_data = poll_data[0];
       res.render("survey", templatevars);
     })
 })
 
 app.post("/survey/:user_survey_id", (req, res) => {
-  //collect informations from drag-and-drop
-  //[searchResultsScore]
-  //run the function to do the math of the results
-  //save the results in database
-  //[addResultsScore]
-  //search for admin email 
-  //collect information from DB [searchForAdminLink]
-  //send the email for the admin
-  res.redirect("/survey/confirmation");
+
+  let array = req.body.answers
+  let score_1 = 0
+  let score_2 = 0
+  let score_3 = 0
+  let score_4 = 0
+  
+  for(let i = 0; i < array.length; i++){
+    if (array[i] === 'score_1'){
+      score_1 = (4 - i)
+    } else if (array[i] === 'score_2'){
+      score_2 = (4 - i)
+    } else if (array[i] === 'score_3'){
+      score_3 = (4 - i)
+    } else if (array[i] === 'score_4'){
+      score_4 = (4 - i)
+    }
+  }
+
+  dbHelpers.searchSurveyScore(req.body.survey_id)
+  .then((scores) => {
+    score_1 += scores[0].score_1
+    score_2 += scores[0].score_2
+    score_3 += scores[0].score_3
+    score_4 += scores[0].score_4
+   return
+  })
+  .then(() => {
+    return dbHelpers.addSurveyScore(req.body.survey_id, score_1, score_2, score_3, score_4)
+  })
+  .then(() => {
+    console.log(req.body.admin_id)
+    console.log(req.body.user_link, req.body.admin_link)
+    return dbHelpers.searchForAdminEmail(req.body.admin_id)
+  })
+  .then((email)=>{
+    mailgun(email[0].email, req.body.user_link, req.body.admin_link)
+    res.redirect("/survey/confirmation");
+  })
+  .catch((err)=> console.error(err))
 })
 
 app.get("/admin/:admin_survey_id", (req, res) => {
