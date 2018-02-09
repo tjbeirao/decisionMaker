@@ -49,15 +49,32 @@ module.exports = function(knex){
         .then((res) => res)
         .catch(err => console.log(err))
     }
+     // Function that queries db for survey ID 
+     const searchForSurveyidAdminLink = function(admin_link) {
+        return knex.select('id').table('survey').where('admin_link', admin_link)
+        .then((res) => res)
+        .catch(err => console.log(err))
+    }
     // Function that queries db for user URL 
-    const searchSurveyAnswers = function(id) {
-        return knex.select('answer_1','answer_2','answer_3','answer_4').table('survey').where('id', id)
+    const searchSurveyData = function(id) {
+        return knex.select(
+            'id',
+            'admin_id',
+            'admin_link',
+            'user_link',
+            'title',
+            'description',
+            'question',
+            'answer_1',
+            'answer_2',
+            'answer_3',
+            'answer_4').table('survey').where('id', id)
         .then((res) => res)
         .catch(err => console.log(err))
     }
     // Function that queries db for user URL 
     const searchSurveyScore = function(id) {
-        return knex.select('score_1','score_2','score_3','score_4').table('survey').where('id', id)
+        return knex.select('id', 'score_1','score_2','score_3','score_4').table('survey').where('id', id)
         .then((res) => res)
         .catch(err => console.log(err))
     }
@@ -80,7 +97,8 @@ return {
     addSurveyInfo,
     searchForLinks,
     searchForSurveyid,
-    searchSurveyAnswers,
+    searchForSurveyidAdminLink,
+    searchSurveyData,
     searchSurveyScore,
     addSurveyScore
 }
