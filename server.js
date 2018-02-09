@@ -85,8 +85,8 @@ app.post("/create", (req, res) => {
       )
     })
     .then(()=>{
-      // return mailgun(req.session.current_user, user_link, admin_link)
-      console.log("mail gun function", mailgun(req.session.current_user, user_link, admin_link))
+      mailgun(req.session.current_user, user_link, admin_link)
+      return
     })
     .then(() => { res.redirect("/create/confirmation");})
     .catch((err) => {console.error(err)});

@@ -13,16 +13,18 @@ body {
 //   display: inline-block;
 // }
 
-#main-h1 {
+#app-name {
 	padding-top: 10%;
 	text-align: center;
 	color: grey;
 	font-weight: bold;
-	font-size: 1px;
+  font-family: 'Barlow Condensed', sans-serif;
+	font-size: 100px;
+  font-style: light; 
 }
 .btn-primary {
 	position:absolute;
-    transition: 100s ease;
+    transition: .5s ease;
     top: 70%;
     right: 15%;
 	border-color: #2274A5;
@@ -30,6 +32,12 @@ body {
   width: 30%;
   height: 10%;
   // font-size: 50px;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #2b92cf;
+    border-color: #2b92cf; /*+3 from 0to255*/
 }
 
 .admin_input_email {

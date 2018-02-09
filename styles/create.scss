@@ -11,6 +11,8 @@ input{
 }
 
 .yellowBackground{
+	position: fixed;
+	bottom: 225px;
 	width: 100%;
 	height: 75px;
 	background-color: #FFBF00;
@@ -19,6 +21,8 @@ input{
 }
 
 .pinkBackground{
+	position: fixed;
+	bottom: 150px;
 	width: 100%;
 	height: 75px;
 	background-color: #E83F6F;	
@@ -27,6 +31,8 @@ input{
 }
 
 .greenBackground{
+	position: fixed;
+	bottom: 75px;
 	width: 100%;
 	height: 75px;
 	background-color: #32936F;
@@ -35,14 +41,20 @@ input{
 }
 
 .blueBackground{
+	position: fixed;
+	bottom: 0; 
 	width: 100%;
 	height: 75px;
 	background-color: #2274A5;
 	padding-top: 10px;
+	padding-right: 10px;
+	overflow: hidden;
 	// border: black;
 }
 
 .title_div{
+	position: fixed;
+	bottom: 450px;
 	width: 100%;
 	height: 75px;
 	background-color: #FFFFFF;
@@ -57,6 +69,8 @@ input{
 }
 
 .description_div{
+	position: fixed;
+	bottom: 375px;
 	width: 100%;
 	height: 75px;
 	background-color: #FFFFFF;
@@ -71,6 +85,8 @@ input{
 }
 
 .question_div{
+	position: fixed;
+	bottom: 300px;
 	width: 100%;
 	height: 75px;
 	background-color: #FFFFFF;
@@ -114,7 +130,7 @@ input{
 
 .submit{
 	float: right;
-	display: inline;
+	// display: inline;
 }
 // .btn-link {
 // 	float: right;
