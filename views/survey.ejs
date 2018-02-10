@@ -63,31 +63,25 @@
 </head>
 
 <body>
-  <h3>
-    <i> <%=poll_data.title%> </i>
-    </h2>
-    <p>
-      <i><%=poll_data.description%> </i>
-    </p>
     <h4>
-      <i><%=poll_data.question%></i>
+      <i><%=survey.question%></i>
     </h4>
-    <form class="survey_data_form" action="<%-poll_data.user_link.slice(21)%>" method="POST">
-      <ol id="sortable"><input name="survey_id" value="<%=surveyid%>" type="hidden">
-        <input name="admin_id" value="<%=poll_data.admin_id%>" type="hidden">
-        <input name="user_link" value="<%=poll_data.user_link%>" type="hidden">
-        <input name="admin_link" value="<%=poll_data.admin_link%>" type="hidden">
-        <li id="score_1" class="ui-state-default"><input name="answers[]" value="score_1" type="hidden">
-          <i><%=poll_data.answer_1%></i>
+    <form class="survey_data_form" action="<%-survey.user_link.slice(21)%>" method="POST">
+      <ol id="sortable"><input name="survey_id" value="<%=survey.id%>" type="hidden">
+        <input name="admin_id" value="<%=survey.admin_id%>" type="hidden">
+        <input name="user_link" value="<%=survey.user_link%>" type="hidden">
+        <input name="admin_link" value="<%=survey.admin_link%>" type="hidden">
+        <li id="score_1" class="ui-state-default"><input name="answers[]" value="<%=results[0].id%>" type="hidden">
+          <i><%=results[0].answer%></i><i> <%=results[0].description%></i>
         </li>
-        <li id="score_2" class="ui-state-default"><input name="answers[]" value="score_2" type="hidden">
-          <i><%=poll_data.answer_2%></i>
+        <li id="score_2" class="ui-state-default"><input name="answers[]" value="<%=results[1].id%>" type="hidden">
+          <i><%=results[1].answer%></i><i> <%=results[1].description%></i>
         </li>
-        <li id="score_3" class="ui-state-default"><input name="answers[]" value="score_3" type="hidden">
-          <i><%=poll_data.answer_3%></i>
+        <li id="score_3" class="ui-state-default"><input name="answers[]" value="<%=results[2].id%>" type="hidden">
+          <i><%=results[2].answer%></i><i> <%=results[2].description%></i>
         </li>
-        <li id="score_4" class="ui-state-default"><input name="answers[]" value="score_4" type="hidden">
-          <i><%=poll_data.answer_4%></i>
+        <li id="score_4" class="ui-state-default"><input name="answers[]" value="<%=results[3].id%>" type="hidden">
+          <i><%=results[3].answer%></i><i> <%=results[3].description%></i>
         </li>
       </ol>
       <input type="submit" class="button" value="Send Choices">
