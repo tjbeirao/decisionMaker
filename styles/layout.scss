@@ -24,7 +24,7 @@ body {
 }
 .btn-primary {
 	position:absolute;
-    transition: .5s ease;
+    // transition: 9s ease;
     top: 70%;
     right: 15%;
 	border-color: #2274A5;
@@ -32,6 +32,7 @@ body {
   width: 30%;
   height: 10%;
   // font-size: 50px;
+  border-radius: 20px;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
@@ -47,7 +48,7 @@ body {
     left: 15%;
 	border-color: black;
 	background-color: #EEE;
-  border-radius: 5px;
+  border-radius: 20px;
   width: 30%;
   height: 10%;
   text-align: center;

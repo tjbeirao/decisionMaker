@@ -11,7 +11,7 @@ input{
 }
 
 .yellowBackground{
-	position: fixed;
+	// position: fixed;
 	bottom: 225px;
 	width: 100%;
 	height: 75px;
@@ -21,7 +21,7 @@ input{
 }
 
 .pinkBackground{
-	position: fixed;
+	// position: fixed;
 	bottom: 150px;
 	width: 100%;
 	height: 75px;
@@ -31,7 +31,7 @@ input{
 }
 
 .greenBackground{
-	position: fixed;
+	// position: fixed;
 	bottom: 75px;
 	width: 100%;
 	height: 75px;
@@ -41,7 +41,7 @@ input{
 }
 
 .blueBackground{
-	position: fixed;
+	// position: fixed;
 	bottom: 0; 
 	width: 100%;
 	height: 75px;
@@ -53,7 +53,7 @@ input{
 }
 
 .title_div{
-	position: fixed;
+	// position: fixed;
 	bottom: 450px;
 	width: 100%;
 	height: 75px;
@@ -69,7 +69,7 @@ input{
 }
 
 .description_div{
-	position: fixed;
+	// position: fixed;
 	bottom: 375px;
 	width: 100%;
 	height: 75px;
@@ -85,7 +85,7 @@ input{
 }
 
 .question_div{
-	position: fixed;
+	// position: fixed;
 	bottom: 300px;
 	width: 100%;
 	height: 75px;
@@ -122,6 +122,7 @@ input{
 }
 
 .survey_input_answer4{
+	margin-right: 0 auto;
 	width: 30%;
 	height: 80%;
 	border: 1px solid black;
@@ -129,6 +130,7 @@ input{
 }
 
 .submit{
+	margin-top: 13px;
 	float: right;
 	// display: inline;
 }
