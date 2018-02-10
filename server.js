@@ -19,6 +19,7 @@ const cookieSession = require('cookie-session');
 const borda = require("./routes/utilities/bordaCount.js");
 const dbHelpers = require("./db/dbHelpers.js")(knex);
 const mailgun = require("./routes/utilities/mailGun.js");
+const runoff = require("./routes/utilities/runoff.js")
 const twilio = require('twilio');
 
 // Seperated Routes for each Resource
@@ -27,7 +28,7 @@ const publicRoutes = require("./routes/users");
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
@@ -175,6 +176,7 @@ app.post("/survey/:user_survey_id", (req, res) => {
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
   let admin_link = "";
   let answerEmail = true;
+  let arr = []
   
   scores = scores.map((item, i)=>{
     let value = scores.length - i
@@ -185,8 +187,12 @@ app.post("/survey/:user_survey_id", (req, res) => {
   return item
   })
   for(let i = 0; i < scores.length; i++){
+    arr.push({id: scores[i].id, value: scores[i].value});
     promiseArray.push(dbHelpers.incrementResultsScore(scores[i].id, scores[i].value))
   }
+  console.log("ARR     ", arr)
+  let result = runoff(arr);
+  console.log("RESULTS  ", result)
 
   return Promise.all(promiseArray)
     .then(()=>{
@@ -215,7 +221,7 @@ app.get("/admin/:admin_survey_id", (req, res) => {
 
   dbHelpers.searchSurveyByAdminLink(admin_link)
     .then((survey)=> {
-      console.log(survey)
+      // console.log(survey)
       templatevars.survey = survey[0]
       return survey[0].id
     })
