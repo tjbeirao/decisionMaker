@@ -50,13 +50,8 @@ module.exports = function(knex){
   
     // Results Table Functions 
 
-    const addResultsInfo = function(id, answer, description, score) {
-        return knex('results').insert({
-            survey_id: id,
-            answer: answer,
-            description: description,
-            score: score
-        })
+    const addResultsInfo = function(array) {
+        return knex('results').insert(array)
         .then((res) => res)
         .catch(err => console.log(err))
     }

@@ -74,6 +74,7 @@ app.post("/create", (req, res) => {
   let form = req.body
   let user_link = randomUrl('user')
   let admin_link = randomUrl('admin')
+
   dbHelpers.searchForAdminByEmail(req.session.current_user)
     .then((adminID) => {
       return dbHelpers.addSurveyInfo(
@@ -87,41 +88,16 @@ app.post("/create", (req, res) => {
       return dbHelpers.searchSurveyByUserLink(user_link)
     })
     .then((survey_id) => {
-      dbHelpers.addResultsInfo(  
-        survey_id[0].id,
-        form.answer1,
-        form.survey_input_description1,
-        0
-      )
-      return survey_id
+      let resultsArray = form.answers.map((item)=>{
+        item.survey_id = survey_id[0].id
+        item.score = 0
+        return item
       })
-      .then((survey_id) => {
-      dbHelpers.addResultsInfo(
-        survey_id[0].id,
-        form.answer2,
-        form.survey_input_description2,
-        0
-      )
-      return survey_id
+      return resultsArray
       })
-      .then((survey_id) => {
-      dbHelpers.addResultsInfo(
-        survey_id[0].id,
-        form.answer3,
-        form.survey_input_description3,
-        0
-      )
-      return survey_id
+    .then((resultsArray) => {
+      return dbHelpers.addResultsInfo(resultsArray)
       })
-      .then((survey_id) => {
-      dbHelpers.addResultsInfo(
-        survey_id[0].id,
-        form.answer4,
-        form.survey_input_description4,
-        0
-      )
-      return
-    })
     .then(() => {
       mailgun(req.session.current_user, user_link, admin_link)
       return
@@ -157,7 +133,6 @@ app.get("/survey/:user_survey_id", (req, res) => {
   dbHelpers.searchSurveyByUserLink(user_link)
     .then((survey) => {
       templatevars.survey = survey[0]
-      // console.log(survey[0].id)
       return survey[0].id
     })
     .then((surveyID) => {
