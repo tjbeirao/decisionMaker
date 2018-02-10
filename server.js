@@ -151,6 +151,7 @@ app.get("/survey/:user_survey_id", (req, res) => {
   dbHelpers.searchSurveyByUserLink(user_link)
     .then((survey) => {
       templatevars.survey = survey[0]
+      console.log(survey[0].id)
       return survey[0].id
     })
     .then((surveyID) => {
