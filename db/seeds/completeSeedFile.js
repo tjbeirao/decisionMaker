@@ -1,5 +1,6 @@
 exports.seed = function(knex, Promise) { 
-  return knex('survey').del()
+  return knex('results').del()
+    .then(function(){return knex('survey').del()})
     .then(function(){return knex('admin').del()})
     .then(function(){
       return Promise.all([

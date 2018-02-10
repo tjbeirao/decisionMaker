@@ -9,18 +9,19 @@ module.exports = function(knex){
         .then((res) => res)
         .catch(err => console.log(err))
     }
-    const searchForAdminEmail = function(id) {
+    const searchForAdminByID = function(id) {
         return knex.select('email').table('admin').where('id', id)
         .then((res) => res)
         .catch(err => console.log(err))
     }
-    const searchForAdminid = function(email) {
+    const searchForAdminByEmail = function(email) {
         return knex.select('id').table('admin').where('email', email)
         .then((res) => res)
         .catch(err => console.log(err))
     }
 
     // Survey Table Functions
+
     const addSurveyInfo = function(id, adminLink, userLink, question) {
         return knex('survey').insert({
             admin_id: id,
@@ -48,6 +49,7 @@ module.exports = function(knex){
     }
   
     // Results Table Functions 
+
     const addResultsInfo = function(id, answer, description, score) {
         return knex('results').insert({
             survey_id: id,
@@ -78,15 +80,16 @@ module.exports = function(knex){
 
 return { 
     addAdmin,
-    searchForAdminEmail,
-    searchForAdminid,
+    searchForAdminByID,
+    searchForAdminByEmail,
     addSurveyInfo,
-    searchForLinks,
-    searchForSurveyid,
-    searchForSurveyidAdminLink,
-    searchSurveyData,
-    searchSurveyScore,
-    addSurveyScore
+    searchSurveyByID,
+    searchSurveyByUserLink,
+    searchSurveyByAdminLink,
+    addResultsInfo,
+    updateResultsScore,
+    searchResultsByID,
+    searchResultsBySurveyID
 }
 
 }
