@@ -126,6 +126,7 @@ app.post("/create", (req, res) => {
       return
     })
     // .then(() => {
+    //   console.log(user_link)
     //   twilio(user_link)
     //   return
     // })
@@ -155,7 +156,7 @@ app.get("/survey/:user_survey_id", (req, res) => {
   dbHelpers.searchSurveyByUserLink(user_link)
     .then((survey) => {
       templatevars.survey = survey[0]
-      console.log(survey[0].id)
+      // console.log(survey[0].id)
       return survey[0].id
     })
     .then((surveyID) => {
@@ -163,7 +164,7 @@ app.get("/survey/:user_survey_id", (req, res) => {
     })
     .then((results) => {
       templatevars.results = results;
-      console.log(results)
+      // console.log(results)
       res.render("survey", templatevars);
     })
 })
@@ -172,6 +173,9 @@ app.post("/survey/:user_survey_id", (req, res) => {
   let scores = req.body.answers
   let promiseArray = []
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
+  let admin_link = "";
+  let answerEmail = true;
+  
   scores = scores.map((item, i)=>{
     let value = scores.length - i
     let obj = {}
@@ -180,21 +184,26 @@ app.post("/survey/:user_survey_id", (req, res) => {
     item = obj
   return item
   })
-
   for(let i = 0; i < scores.length; i++){
-    console.log("id: ", scores[i].id, " value: ", scores[i].value)
     promiseArray.push(dbHelpers.incrementResultsScore(scores[i].id, scores[i].value))
   }
 
   return Promise.all(promiseArray)
-  //   .then(() => {
-  //     console.log("ADMIN EMAIL  ", admin_id)
-  //     console.log("USER LINK  ", user_link)
-  //     console.log("ADMIN LINK  ", survey_id.admin_link)
-  //     mailgun(admin_id.email, user_link, survey_id.admin_link)
-  //     return
-  //   })
     .then(()=>{
+      return dbHelpers.searchSurveyByUserLink(user_link)
+    })
+    .then((survey) => {
+      admin_link = survey[0].admin_link
+      return survey[0].admin_id
+    })
+    .then((admin_id) => {
+      return dbHelpers.searchForAdminByID(admin_id)
+    })
+    .then((admin_email) => {
+      mailgun(admin_email[0].email, user_link, admin_link, answerEmail)
+      return
+    })
+    .then(() => {
       res.redirect("/survey/confirmation");
     })
     .catch(err => console.log(err))
