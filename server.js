@@ -85,10 +85,10 @@ app.post("/create", (req, res) => {
       return dbHelpers.searchSurveyByUserLink(user_link)
     })
     .then((survey_id) => {
-      dbHelpers.addResultsInfo(
+      dbHelpers.addResultsInfo(  
         survey_id[0].id,
         form.answer1,
-        form.description1,
+        form.survey_input_description1,
         0
       )
       return survey_id
@@ -97,7 +97,7 @@ app.post("/create", (req, res) => {
       dbHelpers.addResultsInfo(
         survey_id[0].id,
         form.answer2,
-        form.description2,
+        form.survey_input_description2,
         0
       )
       return survey_id
@@ -106,7 +106,7 @@ app.post("/create", (req, res) => {
       dbHelpers.addResultsInfo(
         survey_id[0].id,
         form.answer3,
-        form.description3,
+        form.survey_input_description3,
         0
       )
       return survey_id
@@ -115,7 +115,7 @@ app.post("/create", (req, res) => {
       dbHelpers.addResultsInfo(
         survey_id[0].id,
         form.answer4,
-        form.description4,
+        form.survey_input_description4,
         0
       )
       return
@@ -149,103 +149,65 @@ app.get("/survey/:user_survey_id", (req, res) => {
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
   dbHelpers.searchSurveyByUserLink(user_link)
     .then((survey) => {
-      templatevars.survey = survey[0].id
-      return surveyid[0].id
+      templatevars.survey = survey[0]
+      return survey[0].id
     })
     .then((surveyID) => {
       return dbHelpers.searchResultsBySurveyID(surveyID);
     })
     .then((results) => {
-      templatevars.results = results[0];
+      templatevars.results = results;
       res.render("survey", templatevars);
     })
 })
 
-// app.post("/survey/:user_survey_id", (req, res) => {
+app.post("/survey/:user_survey_id", (req, res) => {
+  let scores = req.body.answers
+  let promiseArray = []
 
-//   let array = req.body.answers
-//   let score_1 = 0
-//   let score_2 = 0
-//   let score_3 = 0
-//   let score_4 = 0
+  scores = scores.map((item, i)=>{
+    let value = scores.length - i
+    let obj = {}
+    obj.id = parseInt(item, 10)
+    obj.value = value
+    item = obj
+  return item
+  })
 
-//   for (let i = 0; i < array.length; i++) {
-//     if (array[i] === 'score_1') {
-//       score_1 = (4 - i)
-//     } else if (array[i] === 'score_2') {
-//       score_2 = (4 - i)
-//     } else if (array[i] === 'score_3') {
-//       score_3 = (4 - i)
-//     } else if (array[i] === 'score_4') {
-//       score_4 = (4 - i)
-//     }
-//   }
+  for(let i = 0; i < scores.length; i++){
+    console.log("id: ", scores[i].id, " value: ", scores[i].value)
+    promiseArray.push(dbHelpers.incrementResultsScore(scores[i].id, scores[i].value))
+  }
 
-//   dbHelpers.searchSurveyScore(req.body.survey_id)
-//     .then((scores) => {
-//       score_1 += scores[0].score_1
-//       score_2 += scores[0].score_2
-//       score_3 += scores[0].score_3
-//       score_4 += scores[0].score_4
-//       return
-//     })
-//     .then(() => {
-//       return dbHelpers.addSurveyScore(req.body.survey_id, score_1, score_2, score_3, score_4)
-//     })
-//     .then(() => {
-//       console.log(req.body.admin_id)
-//       console.log(req.body.user_link, req.body.admin_link)
-//       return dbHelpers.searchForAdminEmail(req.body.admin_id)
-//     })
-//     .then((email) => {
-//       mailgun(email[0].email, req.body.user_link, req.body.admin_link)
-//       return
-//     })
-//     .then(() => {
-//       res.redirect("/survey/confirmation");
-//     })
-//     .catch((err) => console.error(err))
-// })
+  return Promise.all(promiseArray)
+    .then(()=>{
+      res.redirect("/survey/confirmation");
+    })
+    .catch(err => console.log(err))
+})
 
-// app.get("/admin/:admin_survey_id", (req, res) => {
-//   let admin_link = req.protocol + '://' + req.get('host') + req.originalUrl
-  
-//   let percent_1 = 0
-//   let percent_2 = 0
-//   let percent_3 = 0
-//   let percent_4 = 0
+app.get("/admin/:admin_survey_id", (req, res) => {
+  let admin_link = req.protocol + '://' + req.get('host') + req.originalUrl
+  let templatevars = {}
 
-//   dbHelpers.searchForSurveyidAdminLink(admin_link)
-//     .then((survey_id) => {
-//       return dbHelpers.searchSurveyScore(survey_id[0].id)
-//     })
-//     .then((data) => {
-//       let scores = data[0]
-    
-//       let total = scores.score_1 + scores.score_2 + scores.score_3 + scores.score_4;
-//       console.log("total ", total)
-//       percent_1 = ((scores.score_1/total) * 100)
-//       percent_2 = ((scores.score_2/total) * 100)
-//       percent_3 = ((scores.score_3/total) * 100)
-//       percent_4 = ((scores.score_4/total) * 100)
-//       return (scores.id)
-//     })
-//     .then((survey_id) => {
-//       return dbHelpers.searchSurveyData(survey_id)
-//     })
-//     .then((survey_data) => {
-//       let surveyData = survey_data[0]
-//       let templatevars = {
-//         surveyData,
-//         percent_1,
-//         percent_2,
-//         percent_3,
-//         percent_4,
-//       }
+  dbHelpers.searchSurveyByAdminLink(admin_link)
+    .then((survey)=> {
+      console.log(survey)
+      templatevars.survey = survey[0]
+      return survey[0].id
+    })
+    .then((id)=> {
+      return dbHelpers.searchResultsBySurveyID(id)
+    })
+    .then((results)=> {
+      templatevars.results = results
+    })
+    .then(()=> {
+      res.render("results", templatevars)
+    })
+    .catch(err => console.log(err))
+  })
 
-//       return res.render("results", templatevars)
-//     })
-// })
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

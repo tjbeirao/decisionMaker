@@ -23,25 +23,19 @@
 
 <body>
   <h1>
-  	<i><%=surveyData.title%></i>
+  	<i><%=survey.question%></i>
   </h1>
-  <h3>
-  	<i><%=surveyData.question%></i>
-  </h3>
   <p>
-    <i><%=surveyData.description%></i>
+    <i><%=results[0].answer%></i><i><%=results[0].score%></i>
   </p>
   <p>
-    <i><%=surveyData.answer_1%></i><i><%=percent_1%>%</i>
+    <i><%=results[1].answer%></i><i><%=results[1].score%></i>
   </p>
   <p>
-    <i><%=surveyData.answer_2%></i><i><%=percent_2%>%</i>
+    <i><%=results[2].answer%></i><i><%=results[2].score%></i>
   </p>
   <p>
-    <i><%=surveyData.answer_3%></i><i><%=percent_3%>%</i>
-  </p>
-  <p>
-    <i><%=surveyData.answer_4%></i><i><%=percent_4%>%</i>`
+    <i><%=results[3].answer%></i><i><%=results[3].score%></i>`
   </p>
 
 </body>

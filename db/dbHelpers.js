@@ -60,10 +60,8 @@ module.exports = function(knex){
         .then((res) => res)
         .catch(err => console.log(err))
     }
-    const updateResultsScore = function(id, score) {
-        return knex('results').where('id', id).update({
-            score: score
-        })
+    const incrementResultsScore = function(id, score) {
+        return knex('results').where('id', id).increment('score', score)
         .then((res) => res)
         .catch(err => console.log(err))
     }
@@ -87,7 +85,7 @@ return {
     searchSurveyByUserLink,
     searchSurveyByAdminLink,
     addResultsInfo,
-    updateResultsScore,
+    incrementResultsScore,
     searchResultsByID,
     searchResultsBySurveyID
 }
