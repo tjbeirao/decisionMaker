@@ -10,13 +10,20 @@ input{
     font-family: 'Barlow Condensed';
 }
 
+.verticalcenter{
+	min-height: 100%; 
+	min-height: 100vh; 
+  	display: flex;
+  	align-items: center;
+}
+
 .yellowBackground{
 	// position: fixed;
 	bottom: 225px;
 	width: 100%;
 	height: 75px;
 	background-color: #FFBF00;
-	padding-top: 10px;
+	padding-top: 15px;
 	border: black;
 }
 
@@ -26,7 +33,7 @@ input{
 	width: 100%;
 	height: 75px;
 	background-color: #E83F6F;	
-	padding-top: 10px;
+	padding-top: 15px;
 	// border: black;
 }
 
@@ -36,7 +43,7 @@ input{
 	width: 100%;
 	height: 75px;
 	background-color: #32936F;
-	padding-top: 10px;
+	padding-top: 15px;
 	// border: black;
 }
 
@@ -46,8 +53,7 @@ input{
 	width: 100%;
 	height: 75px;
 	background-color: #2274A5;
-	padding-top: 10px;
-	padding-right: 10px;
+	padding-top: 15px;
 	overflow: hidden;
 	// border: black;
 }
@@ -64,8 +70,7 @@ input{
 .survey_input_title{
 	width: 30%;
 	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	border: 1px solid #fffff0;
 }
 
 .description_div{
@@ -80,8 +85,8 @@ input{
 .survey_input_description{
 	width: 30%;
 	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	border: 1px solid #fffff0;
+	border-radius: 0px 0px 25px 25px;
 }
 
 .question_div{
@@ -95,46 +100,130 @@ input{
 
 .survey_input_question{
 	width: 30%;
-	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	height: 50%;
+	border: 1px solid #838383;
 }
 
 .survey_input_answer1{
 	width: 30%;
 	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	border: 1px solid #fffff0;
+	border-radius: 25px 25px 0px 0px;
 }
 
 .survey_input_answer2{
 	width: 30%;
 	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	border: 1px solid #fffff0;
+	border-radius: 25px 25px 0px 0px;
 }
 
 .survey_input_answer3{
 	width: 30%;
 	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	border: 1px solid #fffff0;
+	border-radius: 25px 25px 0px 0px;
 }
 
 .survey_input_answer4{
 	margin-right: 0 auto;
 	width: 30%;
 	height: 80%;
-	border: 1px solid black;
-	border-radius: 5px;
+	border: 1px solid #fffff0;
+	border-radius: 25px 25px 0px 0px;
 }
 
 .submit{
-	margin-top: 13px;
-	float: right;
-	// display: inline;
+	border: 1px solid #838383;
+	color: #838383;
+	margin: 20px auto;
+}
+.submit:hover{
+	border: 1px solid #000000;
+	color: black;
 }
 // .btn-link {
 // 	float: right;
 // 	// width: 20px;
 // }
+
+#survey_create_form{
+bottom: 0; 
+	
+}
+
+@media (max-width: 960px) {
+
+	.survey_input_description{
+		width: 45%;
+	}
+	.survey_input_question{
+		width: 45%;
+	}
+	
+	.survey_input_answer1{
+		width: 45%;
+	}
+	
+	.survey_input_answer2{
+		width: 45%;
+	}
+	
+	.survey_input_answer3{
+		width: 45%;
+
+	}
+	
+	.survey_input_answer4{
+		width: 45%;
+	}
+}
+
+@media (max-width: 560px) {
+
+	.survey_input_description{
+		width: 60%;
+		height: 125%;
+	}
+	.survey_input_question{
+		width: 60%;
+		height: 100%;
+		margin-bottom: 15px;
+	}
+	.survey_input_answer1{
+		width: 60%;
+		height: 125%;
+	}
+	.survey_input_answer2{
+		width: 60%;
+		height: 125%;
+	}
+	.survey_input_answer3{
+		width: 60%;
+		height: 125%;
+	}
+	.survey_input_answer4{
+		width: 60%;
+		height: 125%;
+	}
+	.yellowBackground{
+		height: 125px;
+		padding-top: 35px;
+	}
+	
+	.pinkBackground{
+		height: 15px;
+		padding-top: 35px;
+	}
+	
+	.greenBackground{
+		height: 125px;
+		padding-top: 35px;
+	}
+	
+	.blueBackground{
+		height: 125px;
+		padding-top: 35px;
+	}
+	
+}
