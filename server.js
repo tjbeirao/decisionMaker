@@ -163,6 +163,7 @@ app.get("/survey/:user_survey_id", (req, res) => {
     })
     .then((results) => {
       templatevars.results = results;
+      console.log(results)
       res.render("survey", templatevars);
     })
 })
@@ -171,9 +172,6 @@ app.post("/survey/:user_survey_id", (req, res) => {
   let scores = req.body.answers
   let promiseArray = []
   let user_link = req.protocol + '://' + req.get('host') + req.originalUrl
-  let survey_id = dbHelpers.searchSurveyByUserLink(user_link)
-  let admin_id = dbHelpers.searchForAdminByEmail(survey_id)
-
   scores = scores.map((item, i)=>{
     let value = scores.length - i
     let obj = {}
@@ -189,10 +187,13 @@ app.post("/survey/:user_survey_id", (req, res) => {
   }
 
   return Promise.all(promiseArray)
-    .then(() => {
-      mailgun(admin_id.email, user_link, survey_id.admin_link)
-      return
-    })
+  //   .then(() => {
+  //     console.log("ADMIN EMAIL  ", admin_id)
+  //     console.log("USER LINK  ", user_link)
+  //     console.log("ADMIN LINK  ", survey_id.admin_link)
+  //     mailgun(admin_id.email, user_link, survey_id.admin_link)
+  //     return
+  //   })
     .then(()=>{
       res.redirect("/survey/confirmation");
     })
