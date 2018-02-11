@@ -117,7 +117,7 @@ app.post("/create", (req, res) => {
 
 app.get("/create/confirmation", (req, res) => {
 
-  req.session = null;                                                           //delete all cookies generated
+  req.session.current_user = null;                                                           //delete all cookies generated
   res.render("confirmation");
 })
 
@@ -162,14 +162,10 @@ app.post("/survey/:user_survey_id", (req, res) => {
   return item
   })
   for(let i = 0; i < scores.length; i++){
-    arr.push({id: scores[i].id, value: scores[i].value});
+
     promiseArray.push(dbHelpers.incrementResultsScore(scores[i].id, scores[i].value))
   }
-  console.log("ARR     ", arr)
-  let result = runoff(arr);
-  console.log("RESULTS  ", result)
-
-  return Promise.all(promiseArray)
+    return Promise.all(promiseArray)
     .then(()=>{
       return dbHelpers.searchSurveyByUserLink(user_link)
     })
@@ -193,10 +189,10 @@ app.post("/survey/:user_survey_id", (req, res) => {
 app.get("/admin/:admin_survey_id", (req, res) => {
   let admin_link = req.protocol + '://' + req.get('host') + req.originalUrl
   let templatevars = {}
+  
 
   dbHelpers.searchSurveyByAdminLink(admin_link)
     .then((survey)=> {
-      // console.log(survey)
       templatevars.survey = survey[0]
       return survey[0].id
     })
@@ -204,7 +200,9 @@ app.get("/admin/:admin_survey_id", (req, res) => {
       return dbHelpers.searchResultsBySurveyID(id)
     })
     .then((results)=> {
-      templatevars.results = results
+      // let winner = runoff(results)
+      console.log(results)
+      return templatevars.results = results
     })
     .then(()=> {
       res.render("results", templatevars)

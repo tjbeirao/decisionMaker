@@ -1,5 +1,6 @@
 body {
-  background-color: #EEE;
+  background: url("../images/multicolourBackground.png") no-repeat center center fixed;
+  background-size: 1250px 800px;
   font-family: 'Barlow Condensed', sans-serif;
 }
 
@@ -16,7 +17,7 @@ body {
 #app-name {
 	padding-top: 10%;
 	text-align: center;
-	color: grey;
+	color: #FFFFFF;
 	font-weight: bold;
   font-family: 'Barlow Condensed', sans-serif;
 	font-size: 100px;

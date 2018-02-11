@@ -3,8 +3,18 @@ module.exports = function(knex){
     // Admin Table Functions
 
     const addAdmin = function(email) {
-        return knex('admin').insert({
-            email: email,
+        knex('admin').select('id').where('email',email)
+        .then((id)=>{
+            console.log(id[0])
+            if(id[0].id) {
+                console.log("no email added")
+                return
+            } else {
+                console.log("new email added!")
+                return knex('admin').insert({
+                    email: email,
+                })
+            }
         })
         .then((res) => res)
         .catch(err => console.log(err))
