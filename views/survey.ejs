@@ -36,6 +36,12 @@
       $("#sortable").disableSelection();
     });
   </script>
+  <script>
+  $(function () {
+    $('[data-toggle="popover"]').tooltip()
+    $('[data-toggle="popover"]').popover()
+  })
+  </script>
 </head>
 
 <body>
@@ -84,11 +90,10 @@
               <span class="glyphicon glyphicon-expand" aria-hidden="true" data-toggle="popover" title="<%=results[3].description%>" data-content="<%=results[3].description%>"></span>
             </span>
           </li>
-
-          <li>
-            <input type="submit" class="button" value="Send Choices">
-          </li>
         </ol>
+        <div class="buttonholder">
+          <input type="submit" class="button" value="Send Choices">
+        </div>
       </form>
     </div>
 </body>
