@@ -61,6 +61,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
+  console.log(req.body.email)
   dbHelpers.addAdmin(req.body.email)
   req.session.current_user = req.body.email
   res.redirect("/create");

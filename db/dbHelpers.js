@@ -5,8 +5,8 @@ module.exports = function(knex){
     const addAdmin = function(email) {
         knex('admin').select('id').where('email',email)
         .then((id)=>{
-            console.log(id[0])
-            if(id[0].id) {
+            console.log(id)
+            if(id[0]) {
                 console.log("no email added")
                 return
             } else {
