@@ -17,17 +17,24 @@
 	<link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:400,700" rel="stylesheet">
 
   <!-- Internal CSS -->
-	<link rel="stylesheet" href="/styles/layout.css" type="text/css">
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css">
 </head>
 
 <body>
   <div id="app-name">
     <p>DECIDE KICK</p>
   </div>
-  <form class="admin_create_form" action="/" method="POST">
-    <input class="admin_input_email" type="email" placeholder="Enter email" name="email" required>
-    <input type="submit" class="btn btn-primary" value="Get Started">
-  </form>
+  <div class="field">
+    <form class="admin_create_form" action="/" method="POST">
+      <input class="admin_input_email" type="email" placeholder="Enter email" name="email" required>
+      <input type="submit" class="btn btn-primary" value="Get Started">
+    </form>
+  </div>
 </body>
 
 </html>
+
+<!-- <div class="field">
+    <input type="email" name="email" id="email" placeholder="jane.appleseed@example.com">
+    <label for="email">Email</label>
+  </div> -->

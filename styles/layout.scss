@@ -54,3 +54,17 @@ body {
   height: 10%;
   text-align: center;
 }
+
+.field {
+  display: flex;
+  flex-flow: column-reverse;
+  margin-bottom: 1em;
+}
+
+@media (min-width: 1250px){
+  body {
+    background: url("../images/multicolourBackground.png") no-repeat center center fixed;
+    background-size: 1960px 1080px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+}

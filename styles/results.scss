@@ -1,0 +1,36 @@
+body {
+    background: url("../images/ResultsLongCentered@2x.png") no-repeat top center fixed;
+    background-size: 1250px 1000px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  div.score{
+      text-align: center;
+
+      span{
+        color: #ffffff;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 2.5em;
+        margin: 0 20px;
+      }
+  }
+
+  div.question{
+    width: 100%;
+    height: 50px;
+    margin: 200px auto 50px auto;
+    text-align: center;
+
+    span{
+        display: inline-block;
+        width: 560px;
+        color: #ffffff;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 700;
+        font-size: 4em;
+        text-align: center;
+    }
+  }
+
+ 

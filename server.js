@@ -67,7 +67,11 @@ app.post("/", (req, res) => {
 })
 
 app.get("/create", (req, res) => {
+  if (req.session.current_user){
   res.render("create");
+  } else {
+  res.redirect("/")
+  }
 })
 
 app.post("/create", (req, res) => {
@@ -117,13 +121,13 @@ app.post("/create", (req, res) => {
 
 app.get("/create/confirmation", (req, res) => {
 
-  req.session.current_user = null;                                                           //delete all cookies generated
+  req.session.current_user = null; 
   res.render("confirmation");
 })
 
 app.get("/survey/confirmation", (req, res) => {
 
-  req.session = null;                                                           //delete all cookies generated
+  req.session = null;
   res.render("confirmation");
 })
 
@@ -200,8 +204,20 @@ app.get("/admin/:admin_survey_id", (req, res) => {
       return dbHelpers.searchResultsBySurveyID(id)
     })
     .then((results)=> {
-      // let winner = runoff(results)
+      let total = 0
+      results.forEach((item)=>{
+        return total += item.score
+      })
+      console.log(total)
+      results = results.map((item)=>{
+        item.score = Math.round(100*item.score/total)
+        return item
+      })
       console.log(results)
+      results = results.sort(function (a, b) {
+        return (b.score - a.score);
+    })
+    console.log(results)
       return templatevars.results = results
     })
     .then(()=> {
